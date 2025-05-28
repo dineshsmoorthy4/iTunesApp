@@ -1,14 +1,28 @@
-import React, { useEffect } from 'react';
-import { View, FlatList, Text, Image, TouchableOpacity } from 'react-native';
+// src/features/albums/AlbumList.tsx
+
+import React, { useEffect, useState } from 'react';
+import {
+  FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAlbums } from '../../api/albumService';
 import { setAlbums } from './albumSlice';
 import { RootState } from '../../redux/store';
 import NetInfo from '@react-native-community/netinfo';
+import { albumListStyles as styles } from './style';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const AlbumList = ({ navigation }: any) => {
   const dispatch = useDispatch();
   const albums = useSelector((state: RootState) => state.albums.list);
+  const { width } = useWindowDimensions();
+  const [isGridView, setIsGridView] = useState(true);
+  const numColumns = isGridView ? (width >= 768 ? 3 : 2) : 1;
 
   useEffect(() => {
     NetInfo.fetch().then(state => {
@@ -19,20 +33,51 @@ const AlbumList = ({ navigation }: any) => {
   }, [dispatch]);
 
   const renderItem = ({ item }: any) => (
-    <TouchableOpacity onPress={() => navigation.navigate('Details', { album: item })}>
-      <View style={{ padding: 10, flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
-        <Image source={{ uri: item.artworkUrl100 }} style={{ width: 60, height: 60, marginRight: 10 }} />
-        <Text style={{fontSize: 16, width: 320 }}>{item.collectionName}</Text>
+    <TouchableOpacity
+      style={isGridView ? styles.itemContainer : styles.itemContainerList}
+      onPress={() => navigation.navigate('Album Details', { album: item })}
+    >
+      <Image
+        source={{ uri: item.artworkUrl100 }}
+        style={isGridView ? styles.albumImage : styles.albumImageList}
+      />
+      <View>
+        <Text
+          style={isGridView ? styles.albumTitle : styles.albumTitleList}
+          numberOfLines={2}
+        >
+          {item.collectionName}
+        </Text>
+        {/* <Text
+          style={isGridView ? styles.artistName : styles.artistNameList}
+          numberOfLines={1}
+        >
+          {item.artistName}
+        </Text> */}
       </View>
     </TouchableOpacity>
   );
 
   return (
-    <FlatList
-      data={albums}
-      keyExtractor={item => item.collectionId.toString()}
-      renderItem={renderItem}
-    />
+    <View>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => setIsGridView(!isGridView)}>
+          <Icon
+            name={isGridView ? 'view-list' : 'grid-view'}
+            size={32}
+            color="#333"
+          />
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        data={albums}
+        renderItem={renderItem}
+        keyExtractor={item => item.collectionId.toString()}
+        numColumns={numColumns}
+        contentContainerStyle={styles.listContainer}
+        key={isGridView ? 'grid' : 'list'}
+      />
+    </View>
   );
 };
 

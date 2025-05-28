@@ -10,8 +10,8 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Dashboard" component={AlbumList} />
-        <Stack.Screen name="Details" component={AlbumDetails} />
+        <Stack.Screen name="Albums" component={AlbumList} />
+        <Stack.Screen name="Album Details" component={AlbumDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );
