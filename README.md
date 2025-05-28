@@ -1,4 +1,21 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+This is a iTunesApp (React Native CLI + TypeScript) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+
+A white-labeled album viewer mobile app built using React Native CLI and TypeScript. The app fetches albums from iTunes API, supports offline usage with Redux persist, and is optimized for multiple device sizes and orientations.
+
+- 🎨 White-labeled product structure (SDK-ready)
+
+- 📱 Supports portrait & landscape modes (phone + tablet/iPad)
+
+- 🌐 Fetches album list from iTunes public API
+
+- 💾 Works in offline mode using persisted Redux store
+
+- 🔎 View album details
+
+- ✅ Fully typed with TypeScript
+
+- 🧪 Includes unit tests using Jest
+
 
 # Getting Started
 
@@ -40,7 +57,7 @@ bundle install
 Then, and every time you update your native dependencies, run:
 
 ```sh
-bundle exec pod install
+npx pod-install
 ```
 
 For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
@@ -52,14 +69,58 @@ npx react-native run-ios
 # OR using Yarn
 yarn ios
 ```
+### 3rd Party Frameworks Used
+| Library	| Purpose	| Pros	| Cons	| Alternatives |
+| :---: | :---: | :---: | :---: | :---: |
+| axios	| API handling	| Simpler syntax, interceptors |	Slightly larger than fetch	| fetch |
+| redux, @reduxjs/toolkit	| State management	| Scalable, DevTools	| Slight boilerplate	| context API, Zustand |
+| redux-persist	| Offline storage for Redux	| Seamless storage	| Initial complexity	| SQLite, MMKV |
+| @react-navigation/native	| Navigation	| Community standard	| Requires setup	| react-native-router-flux |
+| @react-native-async-storage/async-storage	| Local storage	| Easy persist integration	| No encryption	| SecureStore |
+| jest, @testing-library/react-native	| Unit testing	| Native testing API	| Requires mocks	| Mocha, Detox (E2E) |
+| react-native-reanimated	| UI performance improvements	| Great animations	| Requires Babel config	| react-native-animatable |
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### Project Structure
+```
+iTunesApp/
+├── src/
+│   ├── api/
+│   │   ├── albumService.ts
+|    ├── assets/
+│   ├── features/
+│   │   ├── albums/
+│   │   │   ├── AlbumDetails.tsx
+│   │   │   └── AlbumList.tsx
+│   │   │   └── albumSlice.ts
+│   ├── navigation/
+│   │   ├── AppNavigator.tsx
+│   ├── redux/
+│   │   └── store.ts
+├── App.tsx
+├── jest.config.js
+├── babel.config.js
+├── metro.config.js
+├── package.json
+└── README.md
+```
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+### Device Compatibility
 
-### Now what?
+- Tested on iPhone 13 (iOS 15), Pixel 6 (Android 13)
 
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+- Supports Portrait & Landscape
+
+- Optimized using Flexbox and SafeAreaView
+
+- Responsive layout using percentage widths and Dimensions API
+
+###  Future Improvements
+
+- Add image caching for offline album thumbnails
+
+- Dark mode theming
+
+- UI polish with reusable components
 
 # Troubleshooting
 
