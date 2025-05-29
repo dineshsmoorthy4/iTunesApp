@@ -12,6 +12,8 @@ A white-labeled album viewer mobile app built using React Native CLI and TypeScr
 
 - 🔎 View album details
 
+- ✅ Album list view in grid and list
+
 - 🎨 View in Dark and Light theme with icons
 
 - 📱 Marquee Animated text for overflow album name
