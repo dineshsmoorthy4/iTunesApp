@@ -12,6 +12,10 @@ A white-labeled album viewer mobile app built using React Native CLI and TypeScr
 
 - 🔎 View album details
 
+- 🎨 View in Dark and Light theme with icons
+
+- 📱 Marquee Animated text for overflow album name
+
 - ✅ Fully typed with TypeScript
 
 - 🧪 Includes unit tests using Jest
@@ -86,7 +90,7 @@ iTunesApp/
 ├── src/
 │   ├── api/
 │   │   ├── albumService.ts
-|    ├── assets/
+|   ├── assets/
 │   ├── features/
 │   │   ├── albums/
 │   │   │   ├── AlbumDetails.tsx
@@ -96,6 +100,11 @@ iTunesApp/
 │   │   ├── AppNavigator.tsx
 │   ├── redux/
 │   │   └── store.ts
+│   ├── themes/
+│   │   └── darkTheme.ts
+│   │   └── lightTheme.ts
+│   │   └── marqueeText.tsx
+│   │   └── ThemeContext.tsx
 ├── App.tsx
 ├── jest.config.js
 ├── babel.config.js
@@ -115,10 +124,6 @@ iTunesApp/
 - Responsive layout using percentage widths and Dimensions API
 
 ###  Future Improvements
-
-- Add image caching for offline album thumbnails
-
-- Dark mode theming
 
 - UI polish with reusable components
 
