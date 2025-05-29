@@ -1,6 +1,6 @@
 // src/features/albums/AlbumList.tsx
 
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -9,20 +9,23 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchAlbums } from '../../api/albumService';
-import { setAlbums } from './albumSlice';
-import { RootState } from '../../redux/store';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchAlbums} from '../../api/albumService';
+import {setAlbums} from './albumSlice';
+import {RootState} from '../../redux/store';
 import NetInfo from '@react-native-community/netinfo';
-import { albumListStyles as styles } from './style';
+import {albumListStyles as styles} from './style';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {useTheme} from '../../themes/ThemeContext';
+import MarqueeText from '../../themes/marqueeText';
 
-const AlbumList = ({ navigation }: any) => {
+const AlbumList = ({navigation}: any) => {
   const dispatch = useDispatch();
   const albums = useSelector((state: RootState) => state.albums.list);
-  const { width } = useWindowDimensions();
+  const {width} = useWindowDimensions();
   const [isGridView, setIsGridView] = useState(true);
   const numColumns = isGridView ? (width >= 768 ? 3 : 2) : 1;
+  const {theme} = useTheme();
 
   useEffect(() => {
     NetInfo.fetch().then(state => {
@@ -32,40 +35,41 @@ const AlbumList = ({ navigation }: any) => {
     });
   }, [dispatch]);
 
-  const renderItem = ({ item }: any) => (
+  const renderItem = ({item}: any) => (
     <TouchableOpacity
       style={isGridView ? styles.itemContainer : styles.itemContainerList}
-      onPress={() => navigation.navigate('Album Details', { album: item })}
-    >
+      onPress={() => navigation.navigate('Album Details', {album: item})}>
       <Image
-        source={{ uri: item.artworkUrl100 }}
+        source={{uri: item.artworkUrl100}}
         style={isGridView ? styles.albumImage : styles.albumImageList}
       />
       <View>
-        <Text
-          style={isGridView ? styles.albumTitle : styles.albumTitleList}
-          numberOfLines={2}
-        >
-          {item.collectionName}
-        </Text>
         {/* <Text
-          style={isGridView ? styles.artistName : styles.artistNameList}
-          numberOfLines={1}
-        >
-          {item.artistName}
+          style={[
+            isGridView ? styles.albumTitle : styles.albumTitleList,
+            {color: theme.text},
+          ]}
+          numberOfLines={2}>
+          {item.collectionName}
         </Text> */}
+        <MarqueeText
+          text={item.collectionName}
+          duration={10000}
+          textStyle={{color: theme.text}}
+          style={{ width: isGridView ? '' : '', marginTop: 8 }}
+        />
       </View>
     </TouchableOpacity>
   );
 
   return (
-    <View>
+    <View style={[{backgroundColor: theme.background}]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => setIsGridView(!isGridView)}>
           <Icon
             name={isGridView ? 'view-list' : 'grid-view'}
             size={32}
-            color="#333"
+            color={theme.icon}
           />
         </TouchableOpacity>
       </View>

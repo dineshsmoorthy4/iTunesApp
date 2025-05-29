@@ -32,24 +32,28 @@ export const albumListStyles = StyleSheet.create({
     marginRight: 12,
   },
   albumTitle: {
-    marginTop: 8,
     fontSize: 14,
     fontWeight: '600',
     color: '#111',
     textAlign: 'center',
+    maxWidth: 150,
+    flexShrink: 1,
+    overflow: 'hidden',
   },
   artistName: {
     fontSize: 12,
     color: '#555',
     marginTop: 2,
     textAlign: 'center',
-  },
+  },  
   albumTitleList: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
     color: '#111',
     textAlign: 'left',
-    width: 300
+    flexShrink: 1,
+    maxWidth: '85%',
+    overflow: 'hidden',
   },
   artistNameList: {
     fontSize: 12,
