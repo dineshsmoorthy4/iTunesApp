@@ -1,6 +1,12 @@
-import axios from 'axios';
+import api from './../api/apiService';
+import { Strings } from './../constants/strings';
 
 export const fetchAlbums = async () => {
-  const response = await axios.get('https://itunes.apple.com/search?term=jack+johnson&entity=album');
-  return response.data.results;
+  try {
+    const response = await api.get('/search?term=jack+johnson&entity=album');
+    return response.data.results;
+  } catch (error) {
+    console.error(Strings.errorFetchingAlbums, error);
+    throw new Error(Strings.errorFetchingAlbums);
+  }
 };

@@ -6,6 +6,7 @@ import AlbumDetails from '../features/albums/AlbumDetails';
 import { useTheme } from '../themes/ThemeContext';
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Strings } from '../constants/strings';
 
 const Stack = createStackNavigator();
 
@@ -25,8 +26,8 @@ export default function AppNavigator() {
           ),
         }}
       >
-        <Stack.Screen name="Albums" component={AlbumList} />
-        <Stack.Screen name="Album Details" component={AlbumDetails} />
+        <Stack.Screen name={Strings.appTitle} component={AlbumList} />
+        <Stack.Screen name={Strings.detailsTitle} component={AlbumDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );

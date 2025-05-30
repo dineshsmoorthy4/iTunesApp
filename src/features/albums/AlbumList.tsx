@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   Text,
@@ -16,7 +17,8 @@ import {albumListStyles as styles} from './style';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useTheme} from '../../themes/ThemeContext';
 import MarqueeText from '../../themes/marqueeText';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {Strings} from '../../constants/strings';
 
 const AlbumList = ({navigation}: any) => {
   const dispatch = useDispatch();
@@ -27,17 +29,25 @@ const AlbumList = ({navigation}: any) => {
   const {theme} = useTheme();
 
   useEffect(() => {
-    NetInfo.fetch().then(state => {
-      if (state.isConnected) {
-        fetchAlbums().then(data => dispatch(setAlbums(data)));
+    const loadAlbums = async () => {
+      try {
+        const state = await NetInfo.fetch();
+        if (state.isConnected) {
+          const data = await fetchAlbums();
+          dispatch(setAlbums(data));
+        }
+      } catch (error) {
+        Alert.alert(Strings.errorFetchingAlbums);
       }
-    });
+    };
+
+    loadAlbums();
   }, [dispatch]);
 
   const renderItem = ({item}: any) => (
     <TouchableOpacity
       style={isGridView ? styles.itemContainer : styles.itemContainerList}
-      onPress={() => navigation.navigate('Album Details', {album: item})}>
+      onPress={() => navigation.navigate(Strings.detailsTitle, {album: item})}>
       <Image
         source={{uri: item.artworkUrl100}}
         style={isGridView ? styles.albumImage : styles.albumImageList}
@@ -49,13 +59,13 @@ const AlbumList = ({navigation}: any) => {
             {color: theme.text},
           ]}
           numberOfLines={2}>
-          {item.collectionName}
+          {item.collectionName || Strings.defaultAlbumName}
         </Text> */}
         <MarqueeText
-          text={item.collectionName}
+          text={item.collectionName || Strings.defaultAlbumName}
           duration={10000}
           textStyle={{color: theme.text}}
-          style={{ width: isGridView ? '' : '', marginTop: 4 }}
+          style={{width: isGridView ? '' : '', marginTop: 4}}
         />
       </View>
     </TouchableOpacity>
@@ -77,7 +87,7 @@ const AlbumList = ({navigation}: any) => {
         renderItem={renderItem}
         keyExtractor={item => item.collectionId.toString()}
         numColumns={numColumns}
-        contentContainerStyle={[styles.listContainer, { paddingBottom: 40 }]}
+        contentContainerStyle={[styles.listContainer, {paddingBottom: 40}]}
         key={isGridView ? 'grid' : 'list'}
       />
     </SafeAreaView>
