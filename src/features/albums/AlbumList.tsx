@@ -1,5 +1,3 @@
-// src/features/albums/AlbumList.tsx
-
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
@@ -18,6 +16,7 @@ import {albumListStyles as styles} from './style';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useTheme} from '../../themes/ThemeContext';
 import MarqueeText from '../../themes/marqueeText';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const AlbumList = ({navigation}: any) => {
   const dispatch = useDispatch();
@@ -56,14 +55,14 @@ const AlbumList = ({navigation}: any) => {
           text={item.collectionName}
           duration={10000}
           textStyle={{color: theme.text}}
-          style={{ width: isGridView ? '' : '', marginTop: 8 }}
+          style={{ width: isGridView ? '' : '', marginTop: 4 }}
         />
       </View>
     </TouchableOpacity>
   );
 
   return (
-    <View style={[{backgroundColor: theme.background}]}>
+    <SafeAreaView style={[{backgroundColor: theme.background}]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => setIsGridView(!isGridView)}>
           <Icon
@@ -78,10 +77,10 @@ const AlbumList = ({navigation}: any) => {
         renderItem={renderItem}
         keyExtractor={item => item.collectionId.toString()}
         numColumns={numColumns}
-        contentContainerStyle={styles.listContainer}
+        contentContainerStyle={[styles.listContainer, { paddingBottom: 40 }]}
         key={isGridView ? 'grid' : 'list'}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

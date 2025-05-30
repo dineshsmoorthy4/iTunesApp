@@ -39,6 +39,7 @@ export const albumListStyles = StyleSheet.create({
     maxWidth: 150,
     flexShrink: 1,
     overflow: 'hidden',
+    marginTop: 8
   },
   artistName: {
     fontSize: 12,
@@ -65,7 +66,7 @@ export const albumListStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     paddingHorizontal: 15,
-    paddingVertical: 10
+    paddingBottom: 10,
   }
 });
 
